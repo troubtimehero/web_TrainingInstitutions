@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Teachers</h1>
+<ul>
+    {% for teacher in teachers %}
+        <li style="color:green">{{ teacher.emp.name }}</li>
+        {% empty %}
+        <li style="color:red">can't find any result!</li>
+        <a href="{% url 'teach:emp' %}">show all employees</a>
+    {% endfor %}
+
+</ul>
+{% endblock %}

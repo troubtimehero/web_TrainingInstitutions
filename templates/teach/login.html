@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block banner %}
+<h3>Login page doesn't has a banner</h3>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+    <p>username : <input type="text", name="username"></p>
+    <p>password : <input type="password", name="password"></p>
+        <input type="submit" value="登录" style="font-size: large">
+        <label style="color: red">{{ msg }}</label>
+
+    </form>
+
+    <p>If you do not have Account, please <a href="{% url 'teach:register' %}">注册</a></p>
+{% endblock %}

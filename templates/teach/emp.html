@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Employees</h1>
+<ul>
+    {% for emp in emps %}
+        <li style="font-style: italic">{{ emp.name }}</li>
+        <ul>
+            <li>card_id:    {{ emp.card_id }}</li>
+            <li>gender:     {% if emp.male %}Male{% else %}Female{% endif %}</li>
+            <li>TEL:        {{ emp.telephone }}</li>
+            <li>address:    {{ emp.address }}</li>
+            <li>birthday:   {{ emp.birth }}</li>
+            <ul style="child-align: right">
+                {% for teacher in emp.teachers_set.all %}
+                    <li>{{ teacher.subject.name }}</li>
+                {% endfor %}
+
+            </ul>
+{#    emps[0].teachers_set.all()[0].subject.name#}
+
+        </ul>
+        <br>
+    {% endfor %}
+
+</ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Here is Personal Center</h2>
+    <h3>{{ msg }}</h3>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p>last visit time : {{ date_time }}</p>
+    <a href="{% url 'teach:logout' %}">logout</a>
+{% endblock %}

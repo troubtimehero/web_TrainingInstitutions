@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Please input keyword for searching</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>keyword: <input type="text" name="wd"></p>
+    <input type="submit" value="提交">
+</form>
+{{ msg }}
+{% if wd %}
+<h1>you input : {{ wd }}</h1>
+{% endif %}
+
+{% endblock %}

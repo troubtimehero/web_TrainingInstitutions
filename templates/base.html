@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <script type="text/javascript">
+
+    </script>
+
+    {% block extJS %}
+
+    {% endblock %}
+
+    {% block extCSS %}
+
+    {% endblock %}
+</head>
+<body>
+
+{% block header %}
+<ul style="list-style-type: none; margin: 0; padding: 0; overflow: hidden">
+    <li style="float: left">&nbsp <a href="{% url 'teach:index' %}">首页</a> &nbsp</li>
+    <li style="float: left">&nbsp <a href="{% url 'teach:teachers' %}">教师风采</a> &nbsp</li>
+    <li style="float: left">&nbsp <a href="{% url 'teach:subjects' %}">精选科目</a> &nbsp</li>
+    <li style="float: left">&nbsp <a href="{% url 'teach:search' %}">搜索</a> &nbsp</li>
+    {% if is_login %}
+    <li style="float: left">&nbsp <a href="{% url 'teach:personal' %}">个人中心</a> &nbsp</li>
+    {% else %}
+    <li style="float: left">&nbsp <a href="{% url 'teach:login' %}">登录</a> &nbsp</li>
+    {% endif %}
+</ul>
+{% endblock %}
+
+{% block banner %}
+    <h1>This is a Banner</h1>
+{% endblock %}
+
+<br>
+
+{% block content %}
+
+{% endblock %}
+
+<br>
+
+{% block footer %}
+
+{% endblock %}
+
+<label style="color:gray"> - - - - - - - - - - - - -      CopyRight @ Cyhol & Troubtimehero      - - - - - - - - - - - - - </label>
+
+</body>
+</html>
