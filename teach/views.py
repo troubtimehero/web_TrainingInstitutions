@@ -3,6 +3,7 @@ import logging
 from datetime import datetime
 
 from django.contrib.auth.hashers import make_password, check_password
+from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q, F
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -52,14 +53,30 @@ def get_subjects(request):
 
 def get_emp(request):
     title = 'Employees'
-    emps = Employees.objects.all()
+    try:
+        count_per_page = int(request.GET.get('n', 5))
+        if not 1 < count_per_page <= 10:
+            count_per_page = 5
+    except ValueError:
+        count_per_page = 5
+
+    print('count_per_page: %d' % count_per_page)
+
+    paginator = Paginator(Employees.objects.all(), count_per_page)
+    try:
+        p = int(request.GET.get('p', 1))
+        if not 0 < p <= paginator.num_pages:
+            raise EmptyPage
+    except (ValueError, EmptyPage):
+        return render(request, '404.html')
+
+    page = paginator.page(p)
     return render(request, 'teach/emp.html', context=check_is_login(locals()))
 
 
 def index(request):
     title = 'Home'
-    msg = 'This is Home Page!'
-
+    msg = 'Hello!'
     return render(request, 'index.html', check_is_login(locals()))
 
 
