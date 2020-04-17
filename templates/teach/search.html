@@ -3,11 +3,18 @@
 {% block content %}
 
 <h1>Please input keyword for searching</h1>
-<form method="post">
+<form method="get" action="{% url 'teach:search' %}">
     {% csrf_token %}
     <p>keyword: <input type="text" name="wd"></p>
     <input type="submit" value="提交">
 </form>
+    <ul>
+        {% for object in object_list %}
+            <li>
+                <a href="{% url 'teach:detail' %}?id={{ object.emp.id }}">{{ object.emp.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {{ msg }}
 {% if wd %}
 <h1>you input : {{ wd }}</h1>

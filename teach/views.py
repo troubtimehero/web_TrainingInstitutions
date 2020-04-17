@@ -8,6 +8,7 @@ from django.db.models import Q, F
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.generic import ListView, DetailView
 
 from teach.models import *
 
@@ -94,6 +95,51 @@ def search(request):
             msg = request.POST.dict
 
     return render(request, 'teach/search.html', context=check_is_login(locals()))
+
+
+class Search(ListView):
+    model = Managers
+    # allow_empty = True
+    template_name = 'teach/search.html'
+    # paginate_by = 2
+
+    # can show all if no this 'get()', but can not search
+    def get(self, request, *args, **kwargs):
+        wd = request.GET.get('wd', '')
+        print(wd)
+        if wd != '':
+            emp = Employees.objects.filter(name__contains=wd)
+            ids = []
+            print('********** 2')
+            if emp.exists():
+                for i in emp:
+                    ids.append(i.id)
+            self.queryset = self.model.objects.filter(emp_id__in=ids)
+        else:
+            self.queryset = self.model.objects.all()
+        return super().get(request, args, kwargs)
+
+
+class Detail(DetailView):
+    id = None
+    model = Employees
+    pk_url_kwarg = 'id'
+    template_name = 'teach/detail.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['id'] = 2
+    #     return context
+
+    def get(self, request, *args, **kwargs):
+        pk = int(request.GET.get('id'))
+        if pk:
+            kwargs['id'] = pk
+            print('\n**********************************')
+            print(kwargs)
+            return super().get(request, *args, **kwargs)
+        else:
+            return render(request, '404.html')
 
 
 def jsontest(request):
